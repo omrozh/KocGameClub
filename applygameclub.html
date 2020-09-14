@@ -1,0 +1,87 @@
+<head>
+    <title>Club Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <center>
+        <br>
+        Ad: <input class="form-control" id="firstname" style="width: 50%;" type="text" name="Firstname ">
+        Soyad: <input class="form-control" id="surname" style="width: 50%;" type="text" name="Surname ">
+        Oyun Geliştirmede kullanabileceğiniz bir beceriniz var mı? Varsa yazınız: <input class="form-control" id="skills" style="width: 50%;" type="text" name="Skill ">
+
+        Email: <input class="form-control" id="email" style="width: 50%;" type="text" name="Email">
+
+        <br>
+
+        Kulüpte hangi alanda daha çok faaliyet göstermeyi planlıyorsunuz?
+        <select id="area">
+            <option value="programming">Yazılım</option>
+            <option value="organization">Organizasyon</option>
+            <option value="design">3D-2D tasarım</option>
+            <option value="networking">Networking</option>
+            <option value="story">Senaryo</option>
+            <option value="VFX">Ses efektleri</option>
+            <option value="animation">Animasyon</option>
+        </select>
+
+        <br>
+        <br>
+
+        Sınıf Düzeyiniz?
+        <select id="class">
+            <option value="Lp">LP / Hazırlık</option>
+            <option value="9">9.Sınıf</option>
+            <option value="10">10.Sınıf</option>
+            <option value="11">11.Sınıf</option>
+            <option value="12">12.Sınıf</option>
+        </select>
+
+        <br>
+        <br>
+
+        <input onclick="store()" id="submitbutton" class="btn btn-primary" style="width: 30%;" type="submit" name="submit" value="Submit">
+    </center>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyAuHLCZsy_C23ts1yKTCTbDhH7QokkBvso",
+        authDomain: "ingames-website.firebaseapp.com",
+        databaseURL: "https://ingames-website.firebaseio.com",
+        projectId: "ingames-website",
+        storageBucket: "ingames-website.appspot.com",
+        messagingSenderId: "1008846259700",
+        appId: "1:1008846259700:web:c79e9fd5e401c7a360e5a1",
+        measurementId: "G-XRJD3LKKJ3"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig)
+
+    function store(){
+        var name = document.getElementById("firstname").value;
+        var surname = document.getElementById("surname").value;
+        var skills = document.getElementById("skills").value
+        var email = document.getElementById("email").value;
+        var area = document.getElementById("area").value
+        var classLevel = document.getElementById("class").value;
+
+        var ref = firebase.storage();
+        var storeref = ref.ref("gamesclub/" + name + " - " + email + ".txt");
+        var file = new Blob([name + "\n" + surname + "\n" + email + "\n" + skills + "\n" + area + "\n" + classLevel], { type: "text/plain;charset=utf-8" });
+
+        storeref.put(file).then(function() {
+            alert('Başvurunuz tamamlandı!');
+            document.location.reload();
+        });
+    }
+    </script>
+</body>
